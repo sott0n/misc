@@ -8,3 +8,7 @@ Cargo.lock
 .*.rustfmt
 cranelift.dbg*
 rusty-tags.*
+db
+incremental_db
+output_files
+.vagrant

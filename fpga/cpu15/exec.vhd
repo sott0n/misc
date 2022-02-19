@@ -1,5 +1,5 @@
 library IEEE;
-use IEEE.std_logic_ll64.all;
+use IEEE.std_logic_1164.all;
 use IEEE.std_logic_unsigned.all;
 
 entity exec is
@@ -116,7 +116,7 @@ begin
                         REG_WEN <= '0';
                         RAM_WEN <= '1';
                         PC <= PC + 1;
-                    when othres =>
+                    when others =>
                         null;
                 end case;
             end if;

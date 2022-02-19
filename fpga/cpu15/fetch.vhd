@@ -1,5 +1,5 @@
 library IEEE;
-use IEEE.std_logic_ll64.all;
+use IEEE.std_logic_1164.all;
 use IEEE.std_logic_unsigned.all;
 
 entity fetch is
@@ -39,7 +39,7 @@ constant MEM : MEMORY :=
 begin
     process(CLK_FT)
     begin
-        if(CLK'event and CLK_FT = '1') then
+        if(CLK_FT'event and CLK_FT = '1') then
             PROM_OUT <= MEM(conv_integer(P_COUNT(3 downto 0)));
         end if;
     end process;

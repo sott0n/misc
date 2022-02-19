@@ -1,45 +1,44 @@
 library IEEE;
-use IEEE.std_logic_ll64.all;
+use IEEE.std_logic_1164.all;
 
-entity ram_wb is
+entity reg_dc is
     port
     (
-        CLK_WB      : in std_logic;
-        RAM_ADDR    : in std_logic_vector(7 downto 0);
-        RAM_IN      : in std_logic_vector(15 downto 0);
-        RAM_WEN     : in std_logic;
-        RAM_0       : out std_logic_vector(15 downto 0);
-        RAM_1       : out std_logic_vector(15 downto 0);
-        RAM_2       : out std_logic_vector(15 downto 0);
-        RAM_3       : out std_logic_vector(15 downto 0);
-        RAM_4       : out std_logic_vector(15 downto 0);
-        RAM_5       : out std_logic_vector(15 downto 0);
-        RAM_6       : out std_logic_vector(15 downto 0);
-        RAM_7       : out std_logic_vector(15 downto 0);
-        IO64_OUT    : out std_logic_vector(15 downto 0)
+        CLK_DC      : in std_logic;
+        N_REG_IN    : in std_logic_vector(2 downto 0);
+        REG_0       : in std_logic_vector(15 downto 0);
+        REG_1       : in std_logic_vector(15 downto 0);
+        REG_2       : in std_logic_vector(15 downto 0);
+        REG_3       : in std_logic_vector(15 downto 0);
+        REG_4       : in std_logic_vector(15 downto 0);
+        REG_5       : in std_logic_vector(15 downto 0);
+        REG_6       : in std_logic_vector(15 downto 0);
+        REG_7       : in std_logic_vector(15 downto 0);
+        N_REG_OUT   : out std_logic_vector(2 downto 0);
+        REG_OUT     : out std_logic_vector(15 downto 0)
     );
-end ram_wb;
+end reg_dc;
 
-architecture RTL of ram_wb is
+architecture RTL of reg_dc is
 
 begin
-    process(CLK_WB)
+    process(CLK_DC)
     begin
-        if(CLK_WB'event and CLK_WB = '1') then
-            if(RAM_WEN = '1') then
-                case RAM_ADDR is
-                    when "00000000" => RAM_0 <= RAM_IN;
-                    when "00000001" => RAM_1 <= RAM_IN;
-                    when "00000010" => RAM_2 <= RAM_IN;
-                    when "00000011" => RAM_3 <= RAM_IN;
-                    when "00000100" => RAM_4 <= RAM_IN;
-                    when "00000101" => RAM_5 <= RAM_IN;
-                    when "00000110" => RAM_6 <= RAM_IN;
-                    when "00000111" => RAM_7 <= RAM_IN;
-                    when "01000000" => IO64_OUT <= RAM_IN;
-                    when othres => null;
-                end case;
-            end if;
+        if(CLK_DC'event and CLK_DC = '1') then
+            case N_REG_IN is
+                when "000" => REG_OUT <= REG_0;
+                when "001" => REG_OUT <= REG_1;
+                when "010" => REG_OUT <= REG_2;
+                when "011" => REG_OUT <= REG_3;
+                when "100" => REG_OUT <= REG_4;
+                when "101" => REG_OUT <= REG_5;
+                when "110" => REG_OUT <= REG_6;
+                when "111" => REG_OUT <= REG_7;
+                when others => null;
+            end case;
+
+            N_REG_OUT <= N_REG_IN;
+
         end if;
     end process;
 end RTL;

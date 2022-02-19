@@ -1,5 +1,5 @@
 library IEEE;
-use IEEE.std_logic_ll64.all;
+use IEEE.std_logic_1164.all;
 
 entity decode is
     port

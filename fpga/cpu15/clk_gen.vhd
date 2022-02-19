@@ -1,20 +1,20 @@
 library IEEE;
-use IEEE.std_logic_ll64.all;
-use IEEE.std_logic_unsigined.all;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_unsigned.all;
 
 entity clk_gen is
     port 
     (
         CLK     : in std_logic;
-        CLK_FT  : in std_logic;
-        CLK_DC  : in std_logic;
-        CLK_EX  : in std_logic;
-        CLK_WB  : in std_logic
+        CLK_FT  : out std_logic;
+        CLK_DC  : out std_logic;
+        CLK_EX  : out std_logic;
+        CLK_WB  : out std_logic
     );
 end clk_gen;
 
 architecture RTL of clk_gen is
-signal CPUNT : std_logic_vector(1 downto 0) := "00";
+signal COUNT : std_logic_vector(1 downto 0) := "00";
 begin
     process(CLK)
     begin

@@ -1,5 +1,5 @@
 library IEEE;
-use IEEE.std_logic_ll64.all;
+use IEEE.std_logic_1164.all;
 
 entity ram_dc is
     port
@@ -36,7 +36,7 @@ begin
                 when "00000110" => RAM_OUT <= RAM_6;
                 when "00000111" => RAM_OUT <= RAM_7;
                 when "01000001" => RAM_OUT <= IO65_IN;
-                when othres => null;
+                when others => null;
             end case;
         end if;
     end process;

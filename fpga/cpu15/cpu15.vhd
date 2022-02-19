@@ -1,5 +1,5 @@
 library IEEE;
-use IEEE.std_logic_ll64.all;
+use IEEE.std_logic_1164.all;
 use IEEE.std_logic_unsigned.all;
 
 entity cpu15 is
@@ -12,7 +12,7 @@ entity cpu15 is
     );
 end cpu15;
 
-architecuture RTL of cpu15 is
+architecture RTL of cpu15 is
 component clk_gen
     port
     (
@@ -225,7 +225,7 @@ begin
             N_REG_OUT => N_REG_B,
             REG_OUT => REG_B
         );
-    C6 : reg_dc
+    C6 : ram_dc
         port map(
             CLK_DC => CLK_DC,
             RAM_AD_IN => PROM_OUT(7 downto 0),
@@ -243,7 +243,7 @@ begin
         );
     C7 : exec
         port map(
-            CLK_DC => CLK_DC,
+            CLK_EX => CLK_EX,
             RESET_N  => RESET_N,
             OP_CODE => OP_CODE,
             REG_A => REG_A,
@@ -285,7 +285,7 @@ begin
             RAM_4 => RAM_4,
             RAM_5 => RAM_5,
             RAM_6 => RAM_6,
-            RAM_7 => RAM_7
+            RAM_7 => RAM_7,
             IO64_OUT => IO64_OUT
         );
 end RTL;

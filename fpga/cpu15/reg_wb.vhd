@@ -1,5 +1,5 @@
 library IEEE;
-use IEEE.std_logic_ll64.all;
+use IEEE.std_logic_1164.all;
 
 entity reg_wb is
     port
@@ -27,14 +27,14 @@ begin
     begin
         if(CLK_WB'event and CLK_WB = '1') then
             if(RESET_N = '0') then
-                REG_0 <= "000000000000000";
-                REG_1 <= "000000000000000";
-                REG_2 <= "000000000000000";
-                REG_3 <= "000000000000000";
-                REG_4 <= "000000000000000";
-                REG_5 <= "000000000000000";
-                REG_6 <= "000000000000000";
-                REG_7 <= "000000000000000";
+                REG_0 <= "0000000000000000";
+                REG_1 <= "0000000000000000";
+                REG_2 <= "0000000000000000";
+                REG_3 <= "0000000000000000";
+                REG_4 <= "0000000000000000";
+                REG_5 <= "0000000000000000";
+                REG_6 <= "0000000000000000";
+                REG_7 <= "0000000000000000";
             elsif(REG_WEN = '1') then
                 case N_REG is
                     when "000" => REG_0 <= REG_IN;
@@ -45,7 +45,7 @@ begin
                     when "101" => REG_5 <= REG_IN;
                     when "110" => REG_6 <= REG_IN;
                     when "111" => REG_7 <= REG_IN;
-                    when othres => null;
+                    when others => null;
                 end case;
             end if;
         end if;

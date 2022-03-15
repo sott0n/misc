@@ -1,4 +1,6 @@
 *.bk
+*.wlf
+*.bak
 *.swp
 *.swo
 *.swx
@@ -12,3 +14,5 @@ db
 incremental_db
 output_files
 .vagrant
+fpga/cpu15/work
+fpga/cpu15/transcript

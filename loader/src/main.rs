@@ -34,7 +34,7 @@ fn main() {
     }
     let obj_file = args.skip(1).next().unwrap();
     if !obj_file.ends_with(".o") {
-        panic!();
+        panic!("only support .o file");
     }
     let binary = fs::read(obj_file).unwrap();
     let length = binary.len();

@@ -1,0 +1,13 @@
+!<arch>
+//                                              38        `
+file16xxxxxx.txt/
+file17xxxxxxx.txt/
+
+file15xxxxx.txt/0           0     0     644     5         `
+ABCD
+
+/0              0           0     0     644     6         `
+ABCDE
+/18             0           0     0     644     7         `
+ABCDEF
+

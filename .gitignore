@@ -5,6 +5,7 @@
 *.swo
 *.swx
 *.o
+*.a
 tags
 target
 Cargo.lock

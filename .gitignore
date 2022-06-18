@@ -18,3 +18,4 @@ output_files
 .vagrant
 fpga/cpu15/work
 fpga/cpu15/transcript
+.venv

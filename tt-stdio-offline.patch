@@ -1,0 +1,88 @@
+diff --git a/app/api/api/settings.py b/app/api/api/settings.py
+index ea7dacb..13e45f7 100644
+--- a/app/api/api/settings.py
++++ b/app/api/api/settings.py
+@@ -55,7 +55,7 @@ INSTALLED_APPS = [
+     "django.contrib.staticfiles",
+     "docker_control",
+     "model_control",
+-    "vector_db_control",
++    #"vector_db_control",
+     "corsheaders",
+     "logs_control",
+ ]
+diff --git a/app/api/docker_control/docker_utils.py b/app/api/docker_control/docker_utils.py
+index 163f4ce..8683b95 100644
+--- a/app/api/docker_control/docker_utils.py
++++ b/app/api/docker_control/docker_utils.py
+@@ -51,6 +51,7 @@ def run_container(impl, weights_id):
+         run_kwargs["environment"]["MODEL_WEIGHTS_PATH"] = get_model_weights_path(
+             impl.model_container_weights_dir, weights_id
+         )
++        
+         logger.info(f"run_kwargs:= {run_kwargs}")
+         container = client.containers.run(impl.image_version, **run_kwargs)
+         verify_container(impl, run_kwargs, container)
+diff --git a/app/api/vector_db_control/__init__.py b/app/api/vector_db_control/__init__.py
+index e772945..e49670d 100644
+--- a/app/api/vector_db_control/__init__.py
++++ b/app/api/vector_db_control/__init__.py
+@@ -2,4 +2,4 @@
+ #
+ # SPDX-FileCopyrightText: © 2024 Tenstorrent AI ULC
+ 
+-default_app_config = "api.apps.vector_db.apps.VectorDbConfig"
++#default_app_config = "api.apps.vector_db.apps.VectorDbConfig"
+diff --git a/app/docker-compose.yml b/app/docker-compose.yml
+index e2ffb8c..0d2af22 100644
+--- a/app/docker-compose.yml
++++ b/app/docker-compose.yml
+@@ -39,12 +39,14 @@ services:
+       - INTERNAL_PERSISTENT_STORAGE_VOLUME
+       - BACKEND_API_HOSTNAME
+       - JWT_SECRET
++      - HF_HUB_OFFLINE=1
++      - HF_DATASETS_OFFLINE=1
+     volumes:
+       # mounting docker unix socket allows for backend container to run docker cmds
+       - /var/run/docker.sock:/var/run/docker.sock
+       - ${HOST_PERSISTENT_STORAGE_VOLUME}:${INTERNAL_PERSISTENT_STORAGE_VOLUME}
+       # for development mount api changes
+-      # - ./api:/api
++      - ./api:/api
+ 
+     healthcheck:
+       # On first application load resources for transformers/etc
+@@ -96,7 +98,7 @@ services:
+       timeout: 10s
+       retries: 3
+     container_name: tt_studio_chroma
+-
++  
+     networks:
+       - tt_studio_network
+ 
+diff --git a/startup.sh b/startup.sh
+index ab86be0..d633d9f 100755
+--- a/startup.sh
++++ b/startup.sh
+@@ -187,10 +187,10 @@ fi
+ # Step 4: Run Docker Compose with or without hardware support
+ if [[ "$RUN_TT_HARDWARE" = true ]]; then
+     echo "🚀 Running Docker Compose with TT hardware support..."
+-    docker compose -f "${TT_STUDIO_ROOT}/app/docker-compose.yml" -f "${DOCKER_COMPOSE_TT_HARDWARE_FILE}" up --build -d
++    docker compose -f "${TT_STUDIO_ROOT}/app/docker-compose.yml" -f "${DOCKER_COMPOSE_TT_HARDWARE_FILE}" up --no-build -d
+ else
+     echo "🚀 Running Docker Compose without TT hardware support..."
+-    docker compose -f "${TT_STUDIO_ROOT}/app/docker-compose.yml" up --build -d
++    docker compose -f "${TT_STUDIO_ROOT}/app/docker-compose.yml" up --no-build -d
+ fi
+ 
+ 
+@@ -217,4 +217,4 @@ echo -e "\e[1;33m=====================================================\e[0m"
+ echo
+ echo -e "\e[1;33m🛑 To stop the app and services, run:\e[0m \e[1;33m'./startup.sh --cleanup'\e[0m"
+ echo
+-echo -e "\e[1;33m=====================================================\e[0m"
+\ No newline at end of file
++echo -e "\e[1;33m=====================================================\e[0m"
